@@ -10,7 +10,6 @@ function myPow(x, n){
 		var p = myPow(x, n / 2);
 		return p * p;
 	}
-	return p;
 }
 
 
