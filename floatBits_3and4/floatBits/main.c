@@ -18,7 +18,9 @@ void printFloat(struct floatObject floatObject){
         } else{
             printf(sign ? "-Inf" : "+Inf");
         }
-    } else{
+    } /*else if(exp == 0x00 && !mant){ //don't know need i print "0" or "(-1)^0×1.00...0×2^(-127)"
+        printf("0");
+    } */else{
         printf("%5d %25c %d\n", sign, ' ', exp - 127);
         printf("(-1)×1.");
 
@@ -101,7 +103,7 @@ int main(){
     //float f = 5.0/0;
 
     //run functions
-    floatBits1(0);
+    //floatBits1(f);
     //floatBits2(f);
     //floatBits3(f);
 
