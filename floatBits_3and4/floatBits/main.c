@@ -101,7 +101,7 @@ int main(){
     //float f = 5.0/0;
 
     //run functions
-    //floatBits1(f);
+    floatBits1(0);
     //floatBits2(f);
     //floatBits3(f);
 
