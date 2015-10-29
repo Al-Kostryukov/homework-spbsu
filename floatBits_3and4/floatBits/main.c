@@ -99,7 +99,7 @@ int main(){
     scanf("%f", &f);
     */
 
-    //or
+    //or (for NaN and Inf)
     //float f = 5.0/0;
 
     //run functions
