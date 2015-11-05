@@ -1,6 +1,6 @@
 //3
 function myPow(x, n){
-	if(n < 0) return 1/myPow(x, -n);
+	if(n < 0) return 1 / myPow(x, -n);
 	
 	if(n == 0) {
 		return 1;
@@ -79,7 +79,7 @@ function primes(n){
 		if(isPrime) primes.push(i);		
 	}
 
-	return primes;
+	return primes.join(", ");
 }
 
 
@@ -105,11 +105,40 @@ function fib(n){
 		arr[2] = arr[0] + arr[1];
 		arr[0] = arr[1];
 		arr[1] = arr[2];
-		i++
+		i++;
 	}
 
 	return arr[(n - 1) % 3];
 }
 
+
+
+
+
+//interact with console
+var readline = require('readline');
+
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+
+doItAgain();
+
+function doItAgain(){
+	rl.question("Enter the name of the function with arguments, for example myPow(6, 10) \n", function(func) {
+
+		try{
+	  		var answer = eval(func); //This is VERY VERY BAD UNSAFE solution. But it is easier than parsing
+		}catch(e){
+			console.log("Something went wrong:(");
+		}
+
+		console.log(answer);
+
+		doItAgain();
+	});
+}
 
 
