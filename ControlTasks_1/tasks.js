@@ -1,5 +1,5 @@
 //3
-function myPow(x, n){
+function myPow(x, n) {
 	if(n < 0) return 1 / myPow(x, -n);
 	
 	if(n == 0) {
@@ -14,7 +14,7 @@ function myPow(x, n){
 
 
 //4
-function countZerosInArray(arr){
+function countZerosInArray(arr) {
 	var count = 0;
 	for(var i = 0; i < arr.length; i++){
 		if(arr[i] == 0) count++;
@@ -25,7 +25,7 @@ function countZerosInArray(arr){
 
 
 //5
-function isArraySymmetrical(arr){
+function isArraySymmetrical(arr) {
 	var lastElementIndex = arr.length - 1,
 		isSymmetrical = true;
 	for(var i = 0; i < (arr.length - 1)/2; i++){
@@ -40,8 +40,8 @@ function isArraySymmetrical(arr){
 
 
 //6
-function isStringPalindrome(str){
-	function removeSpaces(str){
+function isStringPalindrome(str) {
+	function removeSpaces(str) {
 		return str.replace(/\s+/g, '');
 	}
 
@@ -62,7 +62,7 @@ function isStringPalindrome(str){
 
 
 //7
-function primes(n){
+function primes(n) {
 	var primes = [];
 
 	for(var i = 2; i <= n; i++){
@@ -84,7 +84,7 @@ function primes(n){
 
 
 //10
-function findString(str, substr){
+function findString(str, substr) {
 	var count = 0,
 		l = substr.length;
 
@@ -96,7 +96,7 @@ function findString(str, substr){
 
 
 //11
-function fib(n){
+function fib(n) {
 	var arr = [1, 1],
 		i = 2;
 
@@ -126,9 +126,8 @@ var rl = readline.createInterface({
 
 doItAgain();
 
-function doItAgain(){
+function doItAgain() {
 	rl.question("Enter the name of the function with arguments, for example myPow(6, 10) \n", function(func) {
-
 		try{
 	  		var answer = eval(func); //This is VERY VERY BAD UNSAFE solution. But it is easier than parsing
 		}catch(e){
