@@ -139,5 +139,3 @@ function doItAgain() {
 		doItAgain();
 	});
 }
-
-
