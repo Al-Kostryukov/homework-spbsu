@@ -33,7 +33,7 @@ void my_strcpy(char *dst, char *src) {
     dst[i] = 0;
 }
 
-void my_strctt(char *dst, char *src) {
+void my_strcat(char *dst, char *src) {
     int start = my_strlen(dst);
     int i = 0;
     while (src[i]) {
@@ -54,7 +54,7 @@ int main()
     my_strcpy(s1, s2);
     printf("copy: %s\n", s1);
 
-    my_strctt(s1, s2);
+    my_strcat(s1, s2);
     printf("concat: %s\n", s1);
     return 0;
 }
