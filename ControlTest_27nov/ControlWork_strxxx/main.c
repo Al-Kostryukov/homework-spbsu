@@ -18,9 +18,15 @@ int my_strcmp(char *s1, char *s2) {
         } else if (s1[i] < s2[i]) {
             return -1;
         } else {
-            return 0;
+            i++;
         }
-        i++;
+    }
+    if (strlen(s1) > strlen(s2)) {
+        return 1;
+    } else if (strlen(s1) < strlen(s2)) {
+        return -1;
+    } else {
+        return 0;
     }
 }
 
@@ -44,10 +50,10 @@ void my_strcat(char *dst, char *src) {
 
 
 
-int main()
-{
+int main() {
     char s1[] = "hello";
     char s2[] = "world";
+
     printf("length s1: %d\n", my_strlen(s1));
     printf("compare: %d\n", my_strcmp(s1, s2));
 
@@ -56,5 +62,6 @@ int main()
 
     my_strcat(s1, s2);
     printf("concat: %s\n", s1);
+
     return 0;
 }
