@@ -3,7 +3,7 @@
 
 
 size_t my_strlen(char* src) {
-    int i = 0;
+    size_t i = 0;
     while (src[i]) {
         i++;
     }
