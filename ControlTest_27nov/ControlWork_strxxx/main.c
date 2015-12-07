@@ -21,11 +21,9 @@ int my_strcmp(char *s1, char *s2) {
             i++;
         }
     }
-    size_t s1_len = strlen(s1);
-    size_t s2_len = strlen(s2);
-    if (s1_len > s2_len) {
+    if (s1[i]) {
         return 1;
-    } else if (s1_len < s2_len) {
+    } else if (s2[i]) {
         return -1;
     } else {
         return 0;
