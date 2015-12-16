@@ -5,10 +5,10 @@
 #define MAX_LEN 100
 
 void removeLetter() {
-    char str[255] = {0};
+    char str[255];
     char letter;
     printf("input string and letter: ");
-    scanf("%s %c", &str, &letter);
+    scanf("%s %c", str, &letter);
     printf("string without letter: ");
 
     int i = 0;
@@ -21,9 +21,18 @@ void removeLetter() {
 }
 
 
-int compareNums(char* num1, char* num2) {
-    int i = MAX_LEN;
-    while(i > 0) {
+char compare(char* num1, char* num2) {
+    int j;
+    for (j = strlen(num1); j < MAX_LEN; j++) {
+        num1[j] = '0';//clear garbage
+    }
+    for (j = strlen(num2); j < MAX_LEN; j++) {
+        num2[j] = '0';//clear garbage
+    }
+
+    int i = MAX_LEN - 1;
+
+    while(i >= 0) {
         if (num1[i] == num2[i]) {
             i--;
         } else if (num1[i] > num2[i]) {
@@ -31,14 +40,13 @@ int compareNums(char* num1, char* num2) {
         } else {
             return -1;
         }
-
     }
 
     return 0;
 }
 
 
-void printComment() {
+void printComments() {
     FILE *f = fopen("input.txt", "r");
     if (f == NULL) {
         printf("file not opened");
@@ -46,20 +54,20 @@ void printComment() {
     }
 
     char cPrev, cCur;
-
-    cCur = 0;
-    do {
+    cCur = fgetc(f);
+    while (cCur != EOF) {
         cPrev = cCur;
         cCur = fgetc(f);
-    } while (!(cPrev == '/' && cCur == '/'));
-
-
-    char result = fgetc(f);
-    while (result != '\n' && result != EOF) {
-        printf("%c", result);
-        result = fgetc(f);
+        if (cPrev == '/' && cCur == '/') {
+            printf("//");
+            cCur = fgetc(f);
+            while (cCur != '\n' && cCur != EOF) {
+                printf("%c", cCur);
+                cCur = fgetc(f);
+            }
+            printf("\n");
+        }
     }
-
 
     fclose(f);
 }
@@ -67,6 +75,9 @@ void printComment() {
 
 
 int main() {
-    printComment();
+    char num1[MAX_LEN] = "101", num2[MAX_LEN] = "100001";
+    printf("%d\n", compare(num1, num2));
+
+    printComments();
     return 0;
 }
