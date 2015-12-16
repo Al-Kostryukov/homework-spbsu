@@ -19,7 +19,7 @@ void printFloat(struct floatObject floatObject){
             printf(sign ? "-Inf\n" : "+Inf\n");
         }
     } /*else if(exp == 0x00 && !mant){ //don't know need i print "0" or "(-1)^0×1.00...0×2^(-127)"
-        printf("0"); see also https://en.wikipedia.org/wiki/Single-precision_floating-point_format
+        printf("0"); see also https://en.wikipedia.org/wiki/Single-precision_floating-point_format#Exponent_encoding
     } */else{
         printf("%5d %25c %d\n", sign, ' ', exp - 127);
         printf("(-1)×1.");
