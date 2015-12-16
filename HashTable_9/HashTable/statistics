@@ -1,0 +1,30 @@
+HashTable size: 100k (100k of linked lists)
+
+Count of words in book: 329907
+
+Hash Function: HashFAQ6
+Results:
+Time spent: 1.874356
+Count of elements: 34129
+Count of not zero chains: 28917
+Min length of not zero chain: 1
+Max length of chain: 5
+Average length of not zero chain: 1.180240
+
+Hash Function: hashFunctionConst
+Results:
+Time spent: 20.788483
+Count of elements: 34129
+Count of not zero chains: 1
+Min length of not zero chain: 34129
+Max length of chain: 34129
+Average length of not zero chain: 34129.000000
+
+Hash Function: hashFunctionSymbolsCodes
+Results:
+Time spent: 2.004371
+Count of elements: 34129
+Count of not zero chains: 1584
+Min length of not zero chain: 1
+Max length of chain: 136
+Average length of not zero chain: 21.546085
