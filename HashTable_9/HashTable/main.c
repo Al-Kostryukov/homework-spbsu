@@ -204,11 +204,11 @@ void getStatisticsOfHashTable(tHashTableObject HashTableObject) {
 
 
 //<hash functions>
-int hashFunctionConst(char* str, int max) {
+unsigned hashFunctionConst(char* str, int max) {
     return 10;
 }
 
-int hashFunctionSymbolsCodes(char* str, int max) {
+unsigned hashFunctionSymbolsCodes(char* str, int max) {
     int i = 0, sum = 0;;
     while(str[i]) {
         sum += str[i++];
@@ -217,7 +217,7 @@ int hashFunctionSymbolsCodes(char* str, int max) {
     return sum % max;
 }
 
-int HashFAQ6(char* str, int max) {
+unsigned HashFAQ6(char* str, int max) {
 
 	unsigned int hash = 0;
 
