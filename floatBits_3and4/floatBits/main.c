@@ -16,7 +16,7 @@ void printFloat(struct floatObject floatObject){
         if(mant){
             printf("NaN\n");
         } else{
-            printf(sign ? "-Inf" : "+Inf");
+            printf(sign ? "-Inf\n" : "+Inf\n");
         }
     } /*else if(exp == 0x00 && !mant){ //don't know need i print "0" or "(-1)^0×1.00...0×2^(-127)"
         printf("0"); see also https://en.wikipedia.org/wiki/Single-precision_floating-point_format
@@ -92,20 +92,16 @@ struct floatObject floatBits3(float f){
 
 
 int main(){
-    //use scanf
-    /*
-    float f;
-    printf("Enter the float\n");
-    scanf("%f", &f);
-    */
+    float f, f1, f2;
+    printf("Enter the float1 and float2\n");
+    scanf("%f %f", &f1, &f2);
 
-    //or (for NaN and Inf)
-    //float f = 5.0/0;
-
+    f = f1/f2;
+    printf("f = %f\n", f);
     //run functions
-    //floatBits1(f);
-    //floatBits2(f);
-    //floatBits3(f);
+    floatBits1(f);
+    floatBits2(f);
+    floatBits3(f);
 
     return 0;
 }
