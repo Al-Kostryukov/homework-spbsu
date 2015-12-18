@@ -132,6 +132,7 @@ void createCycleInLinkedList(ListNode* linkedList) {
 }
 
 int hasCycle(ListNode* linkedList) {
+    if (linkedList == NULL) return;
     if (linkedList->next == NULL) return 0;
 
     ListNode* fastNode = linkedList->next;
