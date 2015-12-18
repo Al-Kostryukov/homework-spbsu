@@ -220,6 +220,7 @@ void makeTests() {
         int *arrayPointer = (int *)malloc(size * sizeof(int));
         if (arrayPointer == NULL) {
             printf("malloc failed");
+            return;
         }
 
         for (j = 0; j < sizeof(funcPointers)/sizeof(intptr_t); j++) {
