@@ -50,14 +50,14 @@ void setValueByKey(tHashTableObject HashTableObject, char* key, int value) {
         }
     }
 
-    listNode* newNode = calloc(1, sizeof(listNode));
+    listNode* newNode = (listNode*)calloc(1, sizeof(listNode));
     if (newNode == NULL) {
         printf("calloc failed: new key is not inserted\n");
         return;
     }
 
     currentNode->next = newNode;
-    newNode->key = malloc((strlen(key) + 1) * sizeof(char));
+    newNode->key = (char*)malloc((strlen(key) + 1) * sizeof(char));
     if (newNode->key == NULL) {
         printf("malloc failed: new key is not inserted\n");
         return;
@@ -107,7 +107,7 @@ void removeNodeByKey(tHashTableObject HashTableObject, char* key) {
 tHashTableObject createHashTable(int hashTableSize, tHashFunction hashFunction) {
     tHashTableObject HashTableObject;
 
-    HashTableObject.HashTable = calloc(hashTableSize, sizeof(listNode));
+    HashTableObject.HashTable = (listNode*)calloc(hashTableSize, sizeof(listNode));
     if (HashTableObject.HashTable == NULL) {
         printf("calloc failed: hash table not created\n");
         return;
