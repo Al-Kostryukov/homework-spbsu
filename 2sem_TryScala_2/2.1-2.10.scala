@@ -11,14 +11,11 @@ object firstTasks extends App {
 
   object brackets {//2
     def isBalanced(list: List[Char]): Boolean = {
-      if (getBalance(list, 0) == 0)
-        true
-      else
-        false
+      getBalance(list, 0) == 0
     }
 
     def getBalance(list: List[Char], curBalance: Int): Int = {
-      if (list.isEmpty)
+      if (list.isEmpty || curBalance < 0)
         curBalance
       else if (list.head == '(')
         getBalance(list.tail, curBalance + 1)
@@ -29,7 +26,7 @@ object firstTasks extends App {
     }
   }
 
-  //println(brackets.isBalanced("()()()()()".toList));
+  //println(brackets.isBalanced(")(()()()()".toList));
 
 
   object coins {//3
