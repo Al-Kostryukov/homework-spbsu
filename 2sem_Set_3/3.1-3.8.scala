@@ -8,16 +8,16 @@ object FunSet extends App {
     x => x == elem
 
   def union(s: Set, t: Set): Set =
-    x => s(x) || t(x)
+    x => contains(s, x) || contains(t, x)
 
   def intersect(s: Set, t: Set): Set =
-    x => s(x) && t(x)
+    x => contains(s, x) && contains(t, x)
 
   def diff(s: Set, t: Set): Set =
-    x => s(x) && !t(x)
+    x => contains(s, x) && !contains(t, x)
 
   def filter(s: Set, p: Int => Boolean): Set =
-    x => s(x) && p(x)
+    x => contains(s, x) && p(x)
 
   val bound = 1000
 
@@ -30,7 +30,7 @@ object FunSet extends App {
     def iter(a: Int): Boolean = {
       if (a > bound)
         true
-      else if (s(a) && !p(a))
+      else if (contains(s, a) && !p(a))
         false
       else
         iter(a + 1)
