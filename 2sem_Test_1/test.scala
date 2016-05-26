@@ -23,7 +23,7 @@ object test {
   def Alignment(text: List[String], screen: Int, alignType: AlignmentClass): Paragraph = {
     val maxLength = text.map(word => word.length).max
     var newAlignType = alignType
-    val newScreen = math.max(screen, maxLength)
+    val newScreen = Math.max(screen, maxLength)
     if (alignType == Fill())
       newAlignType = Left()
     def MakeString(words: List[String], width: Int, str: List[String]): Paragraph = {
@@ -64,12 +64,14 @@ object test {
           else new Space(width - border) :: res
         case Fill() =>
           if (res.tail.isEmpty) res.head :: new Space(width) :: Nil
-          else  res.head :: new Space(width) :: res.tail.tail
+          else res.head :: new Space(width) :: res.tail.tail
         case Right() => new Space(width) :: res
         case Left() => res :+ new Space(width)
-      } else res
+      } else
+      res
   }
 
   def main(args: Array[String]) {
-    print(Alignment(List("I", "am", "you", "are", "heshe", "itis", "ut"), 8, Fill()))
+    print(Alignment(List("Lorem", "get", "you", "be", "as", "sir", "dv"), 8, Fill()))
   }
+}
