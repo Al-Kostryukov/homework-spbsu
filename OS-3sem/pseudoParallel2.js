@@ -1,4 +1,9 @@
 /*
+ * You can run it: node pseudoParallel2.js
+ * [if nodejs installed]
+*/
+
+/*
  * Helpful functions
  *
 */
@@ -68,7 +73,6 @@ Sheduler.prototype = {
 	getNextTaskId: function() {
 		return ++this.curTaskId;
 	},
-
 	assignIdsToTasks: function(tasks) {
 		if (isArray(tasks)) {
 			for (let i = 0; i < tasks.length; i++) {
