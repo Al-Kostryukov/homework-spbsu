@@ -27,19 +27,6 @@ void signal_handler(int signal, siginfo_t *info, void *ctx) {
 
 // TODO start
 
-/* //I done this function, but then realize that i can increment time_from_start.tv_sec in timer_handler
-struct timeval timer_get_full_time_from_start() {
-	int new_counter = timer_getcounter();
-	if ((1e6 - new_counter) < time_from_start.tv_usec) {
-		time_from_start.tv_sec++;
-	}
-
-	time_from_start.tv_usec = 1e6 - new_counter;
-
-	return time_from_start;
-}*/
-
-
 #include "pq.h" //priority queue
 
 struct timeval time_from_start = {
@@ -89,23 +76,16 @@ void timer_handler(void) {
 				}
 			}
 		}
-	}
-
-	
-
-	printf("%s: implemented!\n", __func__);
+	}	
 }
 
 int timer_init(int sec, void(*soft_hnd)(void)) {
-	printf("%s: implemented, interval=%d hnd=%p!\n", __func__, sec, soft_hnd);
 	timer_add_new(sec, soft_hnd);
 	return 0;
 }
 
 int timer_gettime() {
-	printf("%s: implemented, counter=%d\n", __func__, timer_getcounter());
-	//return timer_get_full_time_from_start().tv_sec;
-	return time_from_start.tv_sec;
+	return 1e6 * (time_from_start.tv_sec + 1) - timer_getcounter();
 }
 
 // TODO end
