@@ -64,19 +64,13 @@ void schedule(ucontext_t *uctx, mcontext_t *mctx) {
 	struct task *next_task = g_cur_task == task_pool ? &task_pool[1] : task_pool;
 	printf("%s: switching %p -> %p\n", __func__, g_cur_task, next_task);
 
-
-	//1 variant
-	
+	//1 variant	
 	g_cur_task->uctx = uctx;
-	
 	//
 
-
-	//2 variant, works too, but needs smarter logic with malloc/free
-	
+	//2 variant, works too, but needs smarter logic with malloc/free	
 	//g_cur_task->uctx = (ucontext_t *)malloc(sizeof(ucontext_t));
 	//memcpy(g_cur_task->uctx, uctx, sizeof(ucontext_t));
-	
 	//
 
 	if (next_task->state == 0) {// if there is no context for next task		
@@ -84,13 +78,13 @@ void schedule(ucontext_t *uctx, mcontext_t *mctx) {
 		
 		getcontext(next_task->uctx);
 
-	    next_task->uctx->uc_stack.ss_sp = (char *)malloc(ANOTHER_STACK_SIZE);;
-	    next_task->uctx->uc_stack.ss_size = ANOTHER_STACK_SIZE;
-	    next_task->uctx->uc_link = g_cur_task->uctx;
+		next_task->uctx->uc_stack.ss_sp = (char *)malloc(ANOTHER_STACK_SIZE);;
+		next_task->uctx->uc_stack.ss_size = ANOTHER_STACK_SIZE;
+		next_task->uctx->uc_link = g_cur_task->uctx;
 	    
-	    makecontext(next_task->uctx, (fn_t)task_start, 1, next_task);
+		makecontext(next_task->uctx, (fn_t)task_start, 1, next_task);
 
-	    g_cur_task = next_task;
+		g_cur_task = next_task;
 		setcontext(next_task->uctx);
 	} else if (next_task->state == 1) {
 		g_cur_task = next_task;
