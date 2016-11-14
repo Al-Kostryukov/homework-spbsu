@@ -86,7 +86,7 @@ void schedule(ucontext_t *uctx, mcontext_t *mctx) {
 		mctx->gregs[REG_RDI] = (long long)next_task; //put argument to RDI
 		mctx->gregs[REG_RIP] = (long long)&task_start;
 
-		//!!! such way not working / only at global 
+		//such way works 
 		//long long *another_stack = (long long *)malloc(ANOTHER_STACK_SIZE);
 
 		//stack grows to lower addresses
