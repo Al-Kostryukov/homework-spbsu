@@ -24,7 +24,7 @@ long get_1st_arg(mcontext_t *mctx) {
 /// TASK end
 
 /// TASK 2: implement schedule, should switch execution to another task and back on request
-#define ANOTHER_STACK_SIZE 2000
+#define ANOTHER_STACK_SIZE 20000
 
 struct task {
 	mcontext_t *mctx;
@@ -86,7 +86,7 @@ void schedule(ucontext_t *uctx, mcontext_t *mctx) {
 		mctx->gregs[REG_RIP] = (long long)&task_start;
 
 		//allocating another stack
-		long long *another_stack = (long long *)malloc(ANOTHER_STACK_SIZE);
+		char *another_stack = (char *)malloc(ANOTHER_STACK_SIZE);
 
 		//stack grows to lower addresses
 		mctx->gregs[REG_RSP] = (long long)(another_stack + ANOTHER_STACK_SIZE);
