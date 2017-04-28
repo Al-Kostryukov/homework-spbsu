@@ -1,0 +1,14 @@
+h2 Отлично! Добро пожаловать к нам,
+	br
+	span.fw300 #{nickname}!
+br
+h3 Осталось только верифицировать Ваш email:
+	br
+	span.fw300 #{email}
+br
+h3 На этот email выслано письмо.  
+h3 Перейдите по ссылке в письме, чтобы верифицировать email
+br
+if mailButton[0] 
+	a.pure-button.pure-button-primary(href=mailButton[2]) #{mailButton[1]}
+

@@ -1,0 +1,47 @@
+extends ./layout.jade
+
+block content-right
+  link(rel="stylesheet", href="public/css/qs.css")
+  header.page-header.clearfix
+    a.s-title(href="/qs") Вопросики
+    a.s-h-link(href="/qs/popular") ПОПУЛЯРНОЕ
+    a.s-h-link(href="/qs/hashtags") ХЕШТЕГИ
+    a.s-h-link(href="/qs/choose") ПОДОБРАТЬ ВОПРОС
+    a.nav-q-add.pure-button.pure-button-primary(href="/qs/add")
+      | ЗАДАТЬ ВОПРОС
+  div.content
+    nav.nav-filters-q-add.fw300
+      div.filters-qs
+        a(href="/qs/hashtags/hhh&ggg") #school
+        a(href="/qs/hashtags/hhh&ggg") #школа
+        a(href="/qs/hashtags/hhh&ggg") #химия
+        a(href="/qs/hashtags/hhh&ggg") #русский
+        a(href="/qs/hashtags/hhh&ggg") #русскийязык
+        a(href="/qs/hashtags/hhh&ggg") #математика
+        a(href="/qs/hashtags/hhh&ggg") #уравнение
+        a(href="/qs/hashtags/hhh&ggg") #трудно
+        a(href="/qs/hashtags/hhh&ggg") #обществознание
+        a(href="/qs/hashtags/hhh&ggg") #общество
+        a(href="/qs/hashtags/hhh&ggg") #язык_и_культура
+        a(href="/qs/hashtags/hhh&ggg") #биология
+    div.qs-container
+      - var n = 1
+      while n < 13
+        div.qs-one-wrap.pure-u-1-3
+          a.qs-one(href="/qs/" + n)
+            div.q-body
+              | Как решать квадратные 
+              span.q-hashtag #уравнения
+              | ? Ниче не понимаю. 
+              span.q-hashtag #математика 
+              span.q-hashtag #школа 
+              span.q-hashtag #school
+            div.q-who-asked.clearfix
+              img.q-asked-avatar(src="public/images/wo.jpg")
+              span.q-asked-nick Veronica L.
+            div.q-who-answered
+              | 3 чел. ответили
+            div.q-prize
+              | +15 баллов за ответ
+            
+        - n++

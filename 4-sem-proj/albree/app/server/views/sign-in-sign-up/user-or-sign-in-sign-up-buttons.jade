@@ -1,0 +1,18 @@
+if user.authorised
+	div.user-block
+		img.avatar(src="/public/images/wo.jpg")
+		div.user-nav
+			span.nav-icon
+				i.fa.fa-envelope-o(aria-hidden="true")
+			span.nav-icon
+				i.fa.fa-bell-o(aria-hidden="true")
+			span.nav-icon
+				i.fa.fa-wrench(aria-hidden="true")
+else
+	div.user-block
+		nav
+			ul.login-list
+				li.login-item
+					a.pure-button(href='/sign-in') Вход
+				li.login-item
+					a.pure-button(href='/sign-up') Регистрация

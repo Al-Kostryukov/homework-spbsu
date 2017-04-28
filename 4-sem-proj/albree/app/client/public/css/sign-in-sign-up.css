@@ -1,0 +1,70 @@
+/*SIGN IN*/
+
+.sign-in-form-container {
+	text-align: center;
+	margin-top: 2em;
+}
+
+.sign-in-form-container form{
+	display: inline-block;
+}
+
+.sign-in-form-container input{
+	width: 100%;
+}
+
+.sign-in-form-container > .pure-form .pure-button {
+	margin: 0.6em;
+}
+
+.restore-pass {
+	font-size: 0.8em
+}
+
+.lightweight-p-devider {
+	font-weight: 100;
+	margin-top: 4.5em;
+	font-size: 1.1em;
+}
+
+.below-signin-form {
+	margin: 2.5em 0;
+	font-size: 0.9em;
+}
+
+
+
+/*SIGN UP*/
+
+.sign-up-form-container {
+	text-align: center;
+}
+
+.sign-up-form-container label {
+	text-align: left;
+}
+
+.sign-up-form-container form {
+	display: inline-block;
+}
+
+.sign-up-form-container input:not([type="checkbox"]){
+	width: 100%;
+}
+
+.small-text {
+	font-size: 0.7em;
+}
+
+.grey-text {
+	color: #969494;
+}
+
+#verifying-block {
+	font-weight: 300;
+}
+
+.tooltipster-light {
+	font-weight: 300;
+	font-size: 0.8em;
+}

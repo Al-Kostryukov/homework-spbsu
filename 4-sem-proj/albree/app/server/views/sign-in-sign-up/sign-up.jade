@@ -1,0 +1,243 @@
+extends ../layout.jade
+
+block content-right
+  link(rel="stylesheet", href="/public/css/sign-in-sign-up.css")
+  link(rel="stylesheet", type="text/css", href="/vendor/tooltipster/dist/css/tooltipster.bundle.min.css")
+  link(rel="stylesheet", type="text/css", href="/vendor/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-light.min.css")
+  link(rel="stylesheet", type="text/css", href="/vendor/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-punk.min.css")
+  header.page-header.centered
+    h1.page-title Регистрация
+    h4.page-description Присоединитесь к нашему сообществу
+  div.content
+    div.sign-up-form-container
+      form#form.pure-form.pure-form-stacked.pure-u-1-3
+        fieldset
+          .pure-control-group
+            label(for='nickname') Никнейм
+            input#nickname(type='text', placeholder='Введите никнейм', title='Используйте символы латинского <br> алфавита <b>A-Z, a-z</b>, цифры <b>0-9</b> или <br> символы <b>-, _</b> <br> Например, <b>nicolas</b> или <b>alexey-petrov</b>')
+          .pure-control-group
+            label(for='email') Email
+            input#email(type='text', placeholder='Введите Email')
+          .pure-control-group
+            label(for='password')
+              | Пароль 
+              span.small-text.grey-text
+            input#password(type='password', placeholder='Придумайте пароль', title='Длина пароля должна быть <br> <b>от 10 до 30 символов</b>. <br><br> Разрешены буквы латинского алфавита <br> <b>A-Z, a-z</b>, цифры <b>0-9</b>, <br> символы <b>{, }, [, ], $, -, _, ^</b>')
+          .pure-control-group
+            label(for='password-repeat') Повтор пароля
+            input#password-repeat(type='password', placeholder='Повторите пароль')
+          p.small-text.grey-text
+            | Регистрируясь, вы подтверждаете согласие с правилами сервиса
+        button#submit-button.pure-button.pure-button-primary(type='button') Зарегистрироваться
+      div#verifying-block
+  script(type="text/javascript", src="/vendor/tooltipster/dist/js/tooltipster.bundle.min.js")
+  script.
+    $(document).ready(function(){
+
+      var Form = {
+        form: $('#form'),
+        nickname: $('#nickname'),
+        email: $('#email'),
+        password: $('#password'),
+        passwordRepeat: $('#password-repeat'),
+        submitButton: $('#submit-button'),
+        verifyingBlock: $('#verifying-block'),
+        allFields: [],
+        pushAllFields: function() {
+          this.allFields = [
+            this.nickname,
+            this.email,
+            this.password,
+            this.passwordRepeat
+          ]
+        },     
+        
+        validateNickname: function() {
+          var val = this.nickname.val();
+          
+          if (/^\s+|\s+$/.test(val)) {
+            return [false, "Не используйте пробелы в начале<br>и в конце строки!"];
+          } else if (val.length == 0) {
+            return [false, "Введите никнейм!"];
+          } else if (val.length > 40) {
+            return [false, "Длина никнейма должна быть меньше 40 символов!"];
+          } else {
+            return [true, null];
+          }          
+        },
+        validateEmail: function() {
+          var val = this.email.val(),
+              re = /\S+@\S+\.\S+/;
+
+          if (/^\s+|\s+$/.test(val)) {
+            return [false, "Пробелы в начале и в конце запрещены!"];
+          } else if (val.length == 0 || !re.test(val)) {
+            return [false, "Введите Email!"];
+          } else {
+            return [true, null];
+          }
+        },
+        validatePassword: function() {
+          var val = this.password.val(),
+              re = /^[A-Za-z0-9\{\}\[\]\$\-\^]+$/;
+
+          if (val.length == 0) {
+            return [false, "Введите пароль!"];
+          } else if (val.length < 10 || val.length > 30) {
+            return [false, "Пароль должен иметь длину <br><b>от 10 до 30 символов</b>!"];
+          } else if (!re.test(val)) {
+            return [false, "Разрешены буквы латинского алфавита <br> <b>A-Z</b>, <b>a-z</b>, цифры <b>0-9</b>, символы <b>{</b>, <b>}</b>, <b>[</b>, <b>]</b>, <b>$</b>, <b>-</b>, <b>^</b>!"];
+          } else {
+            return [true, null];
+          }          
+        },
+        validatePasswordRepeat: function() {
+          var val = this.passwordRepeat.val();
+
+          if (val != this.password.val()) {
+            return [false, "Пароли не совпадают!"];
+          } else {
+            return [true, null];
+          }
+        },
+        
+        initHelperTooltips: function() {
+          [ this.nickname,
+            this.password
+          ].each(function() {
+            this.tooltipster({
+              animation: 'grow',
+              theme: 'tooltipster-light',
+              trigger: 'custom',
+              side: 'right',
+              contentAsHTML: true
+            })
+
+            this.data({
+              helperTooltipInstance: $.tooltipster.instancesLatest()[0]
+            })
+          })
+        },
+        initErrorTooltips: function() {
+          this.allFields.each(function() {           
+            this.tooltipster({
+              animation: 'grow',
+              theme: 'tooltipster-punk',
+              side: 'left',
+              contentAsHTML: true,
+              multiple: true,
+              trigger: 'custom'
+            })
+
+            this.data({
+              errorTooltipInstance: $.tooltipster.instancesLatest()[0]
+            });
+          })
+        },
+        initBlurFocusEvents: function() {
+          this.allFields.each(function() {
+            this.blur(function() {
+              var validation = $(this).data('validationHandler').call(Form);
+                   
+              if (!validation[0]) {
+                $(this).data('errorTooltipInstance').content(validation[1]).open();
+              }            
+            });
+
+            this.focus(function() {
+              $(this).data('errorTooltipInstance').close();
+            })
+          });
+
+          [ this.nickname,
+            this.password
+          ].each(function() {
+            this.focus(function() {
+              $(this).data('helperTooltipInstance').open();
+            });
+
+            this.blur(function() {
+              $(this).data('helperTooltipInstance').close();
+            });
+          });
+        },
+        assignValidationHandlers: function() {
+          [ [this.nickname, this.validateNickname],
+            [this.email, this.validateEmail],
+            [this.password, this.validatePassword],
+            [this.passwordRepeat, this.validatePasswordRepeat]
+          ].each(function() {
+            this[0].data({
+              validationHandler: this[1] 
+            })
+          })
+        },
+        revalidatePasswordRepeat: function() {
+          var validation = this.validatePasswordRepeat();
+
+          if (validation[0]) {
+            this.passwordRepeat.data('errorTooltipInstance').close();
+          } 
+        },
+        init: function() {
+          this.pushAllFields();
+          this.assignValidationHandlers();
+          this.initHelperTooltips();
+          this.initErrorTooltips();
+          this.initBlurFocusEvents();
+
+          this.password.keyup($.proxy(this.revalidatePasswordRepeat, this));
+          this.submitButton.click($.proxy(this.submit, this));
+        },
+        submit: function() {
+          var i = 0;
+          this.allFields.each(function() {
+            var validation = this.data('validationHandler').call(Form);
+                   
+            if (!validation[0]) {
+              this.data('errorTooltipInstance').content(validation[1]).open();
+              i++;
+            }
+          });            
+          
+          if (!i) {
+            var preloader = new Preloader({
+              clearParent: true,
+              appendTo: this.submitButton,
+              saveWidth: true,
+              saveHeight: true,
+              hide: true
+            });
+
+            this.submitButton.addClass('pure-button-disabled')
+
+            preloader.instance.fadeIn(500);
+
+            $.post('/sign-up', {
+              nickname: this.nickname.val(),
+              email: this.email.val(),
+              password: this.password.val(),
+              passwordRepeat: this.passwordRepeat.val()
+            })
+            .done($.proxy(this.doneHandler, this))
+            .fail($.proxy(this.failHandler, this))
+          }
+        },
+        doneHandler: function(data) {
+          if (data[0]) {
+            var _this = this;
+            this.form.fadeOut(500, function() {
+              _this.verifyingBlock.html(data[1].verifyingBlockHtml);
+              _this.verifyingBlock.fadeIn(500);
+            })
+            
+          } else {
+            console.log("error")
+          }
+        },
+
+      }
+
+      Form.init();
+    })
+
