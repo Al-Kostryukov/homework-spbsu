@@ -53,7 +53,7 @@ UserController = {
 		}
 	},
 	validation: {
-		signUpFrom: function(fields) {
+		signUpForm: function(fields) {
 			return [true, {
 				nickname: [true, null],
 				email: [true, null],
@@ -80,7 +80,7 @@ UserController = {
 				password = req.body.password;
 
 			const
-				validation = UserController.validation.signUpFrom({ nickname, email, password });
+				validation = UserController.validation.signUpForm({ nickname, email, password });
 
 			if (!validation[0]) {
 				res.json({status: false, data: validation[1]})
