@@ -1,0 +1,20 @@
+if isSignedIn
+  div.user-block
+    a(href="/user/" + user.nickname)
+      img.avatar(src="/public/img/wo.jpg")
+      div.user-nickname @#{user.nickname}
+    div #{user.points} б.
+    div.user-nav
+      span.nav-icon
+        i.fa.fa-envelope-o(aria-hidden="true")
+      span.nav-icon
+        i.fa.fa-bell-o(aria-hidden="true")
+      span.nav-icon
+        i.fa.fa-wrench(aria-hidden="true")
+    a(href="/sign-out") Выйти
+else
+  ul.sidebar-block
+    li
+      a(href="/sign-in") Вход
+    li
+      a(href="/sign-up") Регистрация

@@ -1,0 +1,24 @@
+extends ../layouts/layout.pug
+
+block meta-keywords-description
+
+block title
+  title Не получилось подтвердить email | elbree
+
+
+block sidebar-under-logo
+  ul.sidebar-block
+    li
+      a(href="/sign-in") Вход
+    li
+      a.active(href="/sign-up") Регистрация
+
+block content-right
+  - var pageTitle = "Регистрация"
+  - var pageDescription = "Не получилось подтвердить email :("
+  include ../layouts/header-centered.pug
+  div.content
+    div.centered(style="margin: 3em 0")
+      h2 Не получилось подтвердить email :(
+      br
+      h1 #{message}

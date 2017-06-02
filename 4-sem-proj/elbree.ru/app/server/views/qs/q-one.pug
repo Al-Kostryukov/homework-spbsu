@@ -1,0 +1,46 @@
+extends ../layouts/layout.pug
+
+block meta-keywords-description
+
+block title
+  title Вопрос | elbree
+
+
+block append stylesheets
+  link(rel="stylesheet", href="/public/css/qs/qs.css")
+
+block sidebar-under-logo
+  include ./layouts/sidebar-under-logo.pug
+
+block append scripts
+  script(src="/public/js/qs/q-one.js")
+  script.
+    window.qId = '#{idEncoded}';
+
+block content-right
+  include ./layouts/header.pug
+  div.content
+    div.q-one-container
+      div.qs-one-wrap(style="padding:0")
+        div.qs-one-one
+          div.q-body!= q.textReplaced
+          div.q-who-asked.clearfix
+            img.q-asked-avatar(src="/public/img/wo.jpg")
+            span.q-asked-nick= q.author.nickname
+          div.q-who-answered= q.answers.length ? q.answers.length + ' чел. ответил' + (q.answers.length == 1 ? '' : 'и') : 'Пока нет ответов'
+          div.q-prize= '+' + q.pointsGive + ' б. за ответ'
+    if isSignedIn && !answeredAlready
+      form#form-q-add-answer.pure-form(style="margin-top:1em")
+        form-error(ref="formError")
+        textarea.q-add-textarea(ref="text" v-model="text" style="margin:1em 0")
+        button.pure-button.pure-button-primary(type="button" ref="submitButton" @click.prevent="onSubmit") Добавить ответ
+    else if !isSignedIn
+      div.centered
+        a.pure-button.pure-button-primary(href="/sign-in" style="margin: 1em") Добавить ответ
+    br
+    if q.answers.length
+      h2.centered Ответы
+      each a in q.answers
+        h3 #{a.author.nickname}: #{a.text}
+        br
+        br

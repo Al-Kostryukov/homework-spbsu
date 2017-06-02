@@ -1,0 +1,63 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+
+    block meta-keywords-description
+      meta(name='description', content= pageMetaTags.description)
+      meta(name='keywords', content= pageMetaTags.keywords)
+
+    block title
+      title= title
+
+    block stylesheets
+      //fonts
+      link(href='https://fonts.googleapis.com/css?family=Roboto:100,400,300,700,300italic,400italic,700italic&subset=latin,cyrillic-ext,cyrillic,latin-ext,greek,greek-ext,vietnamese', rel='stylesheet', type='text/css')
+      link(rel="stylesheet", href="/vendor/font-awesome/css/font-awesome.min.css")
+
+      //pure.css
+      link(rel='stylesheet', href='/public/css/pure/pure.css')
+      link(rel='stylesheet', href='/public/css/pure/grids-responsive.css')
+
+      //layout and common styles
+      link(rel='stylesheet', href='/public/css/layouts/layout.css')
+      link(rel='stylesheet', href='/public/css/common/common.css')
+
+      link(rel="stylesheet", href="/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css")
+
+  body
+    #layout.pure-g
+      .content-right.pure-u-1.pure-u-md-5-6
+        block content-right
+        .footer-r
+          a(href="/about") О Элбри
+          a(href="/contacts") Контакты
+
+      .sidebar.pure-u-1.pure-u-lg-1-6
+        a(href="/").brand-title
+          img(src="/public/img/logos/logo.png")
+        block sidebar-under-logo
+          ul.sidebar-block
+            li
+              a(href="/sign-in") Вход
+            li
+              a(href="/sign-up") Регистрация
+
+    block scripts
+      script(type="text/javascript", src="/vendor/jquery/dist/jquery.min.js")
+      script(type="text/javascript", src="/vendor/vue/dist/vue.min.js")
+      script(type="text/javascript", src="/public/js/common/common.js")
+      script(type="text/javascript", src="/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js")
+
+      script.
+        $(document).ready(function(){
+          $('.sidebar').mCustomScrollbar({
+            theme: 'minimal',
+            scrollInertia: 100
+          });
+          $('.content-right').mCustomScrollbar({
+            theme: 'minimal-dark',
+            scrollInertia: 100
+          });
+        })

@@ -1,0 +1,46 @@
+extends ../layouts/layout.pug
+
+block meta-keywords-description
+
+block title
+  title Регистрация | elbree
+
+block append scripts
+  script(type="text/javascript", src="/vendor/tooltipster/dist/js/tooltipster.bundle.min.js")
+  script(type="text/javascript", src="/public/js/sign-up/sign-up.js")
+
+block append stylesheets
+  link(rel='stylesheet', href='/vendor/tooltipster/dist/css/tooltipster.bundle.min.css')
+  link(rel='stylesheet', href='/vendor/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-light.min.css')
+  link(rel='stylesheet', href='/vendor/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-punk.min.css')
+  link(rel='stylesheet', href='/public/css/sign-up/sign-up.css')
+
+block sidebar-under-logo
+  ul.sidebar-block
+    li
+      a(href="/sign-in") Вход
+    li
+      a.active(href="/sign-up") Регистрация
+
+block content-right
+  - var pageTitle = "Регистрация"
+  - var pageDescription = "Присоединяйся к нашему сообществу :)"
+  include ../layouts/header-centered.pug
+  div.content
+    div.sign-up-form-container
+      form#form.pure-form.pure-form-stacked.pure-u-1-3
+        form-error(ref="formError")
+        fieldset
+          .pure-control-group
+            label(for='nickname') Никнейм
+            nickname-input(ref="nickname")
+          .pure-control-group
+            label(for='email') Email
+            email-input(ref="email")
+          .pure-control-group
+            label(for='password') Пароль
+            password-input(ref="password")
+          p.small-text.grey-text
+            | Регистрируясь, ты подтверждаешь согласие с правилами сервиса
+        button.pure-button.pure-button-primary(type='button' ref="submitButton" @click.prevent="onSubmit") Зарегистрироваться
+      div#verifying-block(v-html="html")

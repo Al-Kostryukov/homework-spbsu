@@ -1,0 +1,25 @@
+extends ../layouts/layout.pug
+
+block meta-keywords-description
+
+block title
+	title Восстановление пароля | elbree
+
+block append scripts
+	script(type="text/javascript", src="/public/js/sign-in/sign-in-restore.js")
+
+block append stylesheets
+	link(rel='stylesheet', href='/public/css/sign-in/sign-in-restore.css')
+
+
+block content-right
+	- var pageTitle = "Восстановление пароля"
+	- var pageDescription = "Ничего страшного, восстановить пароль легко!"
+	include ../layouts/header-centered.pug
+	div.content
+		div.sign-in-restore-form-container
+			h4.fw400.instr Введи свой Email. <br>На него придет ссылка для восстановления пароля.
+			form.pure-form.pure-u-1-3
+				fieldset.pure-group
+					input#name(type='text', placeholder='Email')
+				button.pure-controls.pure-button.pure-button-primary(type='button') Отправить

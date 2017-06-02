@@ -1,0 +1,34 @@
+extends ../layouts/layout.pug
+
+block meta-keywords-description
+
+block title
+  title Успешное подтверждение email | elbree
+
+block append scripts
+  script.
+    if (window.history.replaceState) {
+      window.history.replaceState({}, 'Успешное подтверждение email | elbree', '/sign-up/verify-email-ok');
+    }
+
+
+block sidebar-under-logo
+  ul.sidebar-block
+    li
+      a(href="/sign-in") Вход
+    li
+      a.active(href="/sign-up") Регистрация
+
+block content-right
+  - var pageTitle = "Регистрация"
+  - var pageDescription = "Все прошло успешно. Теперь ты с нами! :)"
+  include ../layouts/header-centered.pug
+  div.content
+    div.centered(style="margin: 3em 0")
+      h2 Отлично, все получилось! Теперь ты с нами,
+        br
+        span(style="font-size: 1.5em") #{nickname}
+      br
+      br
+      h2 Сейчас ты можешь
+      a.pure-button.pure-button-primary(href="/sign-in") Войти в свой аккаунт

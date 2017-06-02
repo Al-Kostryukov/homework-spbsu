@@ -1,0 +1,40 @@
+.sign-in-form-container {
+	text-align: center;
+	margin-top: 2em;
+}
+
+.sign-in-form-container form{
+	display: inline-block;
+}
+
+.sign-in-form-container input{
+	width: 100%;
+}
+
+.sign-in-form-container > .pure-form .pure-button {
+	margin: 0.6em;
+}
+
+.restore-pass {
+	font-size: 0.8em
+}
+
+.lightweight-p-devider {
+	font-weight: 100;
+	margin-top: 4.5em;
+	font-size: 1.1em;
+}
+
+.below-signin-form {
+	margin: 2.5em 0;
+	font-size: 0.9em;
+}
+
+.form-error {
+	display: block;
+	padding: 10px;
+	background: #ffb5b5;
+	border: 1px solid #f19696;
+	border-radius: 4px;
+	box-shadow: 0 1px 5px #c5c5c5;
+}

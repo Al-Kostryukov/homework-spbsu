@@ -1,0 +1,13 @@
+h2 Отлично! Добро пожаловать к нам,
+	br
+	span(style="font-size: 1.5em") #{nickname}
+br
+h3 Осталось только верифицировать твой email:
+	br
+	span(style="font-size: 1.2em") #{email}
+br
+h3 На этот email выслано письмо.
+h3 Перейди по ссылке в письме, чтобы верифицировать email
+br
+if mailButton[0]
+	a.pure-button.pure-button-primary(href=mailButton[2] target="_blank") #{mailButton[1]}

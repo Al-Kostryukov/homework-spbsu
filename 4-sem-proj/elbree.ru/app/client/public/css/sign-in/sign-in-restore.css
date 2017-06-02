@@ -1,0 +1,12 @@
+.sign-in-restore-form-container {
+  text-align: center;
+  margin: 5em 0 5em;
+}
+
+.sign-in-restore-form-container input {
+  width: 100%
+}
+
+.instr {
+  color: grey
+}

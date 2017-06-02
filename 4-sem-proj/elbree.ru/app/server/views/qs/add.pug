@@ -1,0 +1,30 @@
+extends ../layouts/layout.pug
+
+block meta-keywords-description
+
+block title
+  title Вопросики | elbree
+
+
+block append stylesheets
+  link(rel="stylesheet", href="/public/css/qs/qs.css")
+  link(rel="stylesheet", href="/vendor/powerange/dist/powerange.css")
+
+block append scripts
+  script(src="/vendor/powerange/dist/powerange.js")
+  script(src="/public/js/qs/add.js")
+
+block sidebar-under-logo
+  include ./layouts/sidebar-under-logo.pug
+
+
+block content-right
+  include ./layouts/header.pug
+  div.content
+    h1.centered Задать вопрос
+    form#form-q-add.pure-form.pure-u-2-3
+      form-error(ref="formError")
+      textarea.q-add-textarea(ref="text" v-model="text")
+      h3.q-add-p-text {{points}} б.
+      input(type="text" ref="range" v-model.lazy="points" max-points=user.points)
+      button.pure-button.pure-button-primary(type="button" ref="submitButton" @click.prevent="onSubmit") Задать вопрос

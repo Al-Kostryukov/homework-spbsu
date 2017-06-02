@@ -1,0 +1,147 @@
+/* use */
+@media (min-width: 64em) {
+	.nav-filters-q-add {
+
+	}
+
+	.filters-qs {
+		padding: 0.5em 0;
+		text-align: center;
+	}
+
+	.filters-qs > a {
+		padding: 3px 7px 5px;
+		border-radius: 3px;
+		display: inline-block;
+	}
+
+	.filters-qs > a:hover {
+		background: #eee;
+	}
+
+	.nav-q-add {
+	        font-size: 0.75em;
+    		padding: 0.7em 1.5em;
+    		letter-spacing: 0.02em;
+    		float: right;
+    		margin: 0.9em 0 0;
+    		font-weight: 400;
+	}
+
+	.qs-container {
+		margin-top: 0.5em;
+	}
+
+	.qs-one-wrap {
+		padding: 0.45em;
+	}
+
+	.qs-one-wrap:nth-child(3n) {
+		padding-right: 0;
+	}
+
+	.qs-one-wrap:nth-child(3n+1) {
+		padding-left: 0;
+	}
+
+	.qs-one, .qs-one-one {
+		padding: 0.7em;
+		border:1px solid #dedede;
+		border-radius: 3px;
+		display: block;
+	}
+
+
+	.qs-one:hover {
+		border:1px solid #bfbebe;
+		box-shadow: 0 0 4px #bfbebe;
+	}
+
+
+	.q-body {
+		border-bottom: 1px solid #eee;
+		height: 110px;
+		overflow:hidden;
+		padding: 0.4em 0;
+		font-weight: 300;
+		font-size:0.9em;
+
+	}
+
+	.q-who-answered {
+		border-bottom: 1px solid #eee;
+		padding: 0.4em 0;
+	}
+
+	.q-prize {
+		padding: 0.4em 0 0;
+	}
+
+	.q-prize, .q-who-answered {
+		font-weight: 300;
+		font-size: 0.75em;
+	}
+
+	.q-who-asked {
+		padding: 0.4em 0;
+		border-bottom: 1px solid #eee;
+	}
+
+	.q-asked-avatar {
+		border-radius: 50%;
+		height: 1.75em;
+		width: 1.75em;
+		float: left;
+	}
+
+	.q-asked-nick {
+		font-weight: 300;
+		font-size: 0.75em;
+		display: inline-block;
+		margin: 0.6em 0 0 0.5em;
+	}
+
+	.q-hashtag {
+		color: #054a8a;
+	}
+
+	a.q-hashtag:hover {
+		text-decoration: underline !important;
+	}
+
+	/**
+	* Next will go styles for q-add
+	**/
+
+	#form-q-add {
+		text-align: center;
+	}
+
+	.q-add-error {
+		display: block;
+		padding: 10px;
+		background: #ffb5b5;
+		border: 1px solid #f19696;
+		border-radius: 4px;
+		box-shadow: 0 1px 5px #c5c5c5;
+		margin: 0.2em 0 0.5em;
+	}
+
+	.q-add-textarea {
+		width: 100%;
+		min-height: 7em;
+		resize: none;
+	}
+
+	.q-add-p-text {
+		margin: 0.9em 0 0 0;
+	}
+	.q-add-p-range {
+		width: 80% !important;
+		margin: 0.8em auto 1.7em;
+	}
+
+
+
+
+}

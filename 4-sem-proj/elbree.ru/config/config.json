@@ -1,0 +1,15 @@
+{
+	"mail": {
+		"noreply": {
+			"email": "no-reply@albree.ru",
+			"password": ""
+		}
+	},
+  "db": {
+    "mongodbUrl": "mongodb://localhost/elbreeDb"
+  },
+	"redisStore": {
+		"url": "redis://127.0.0.1:6379",
+		"secret": ""
+	}
+}

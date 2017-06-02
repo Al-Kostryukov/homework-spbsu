@@ -1,0 +1,64 @@
+.sign-up-form-container {
+	text-align: center;
+}
+
+.sign-up-form-container label {
+	text-align: left;
+}
+
+.sign-up-form-container form {
+	display: inline-block;
+}
+
+.sign-up-form-container input:not([type="checkbox"]){
+	width: 100%;
+}
+
+.small-text {
+	font-size: 0.7em;
+}
+
+.grey-text {
+	color: #969494;
+}
+
+#verifying-block {
+	margin: 2em 0;
+}
+
+.tooltipster-light {
+	font-weight: 300;
+	font-size: 0.8em;
+}
+
+.tooltipster-green .tooltipster-content {
+	color: #15a578 !important;
+	font-weight: 400;
+}
+
+
+
+.password-eye {
+	float: right;
+  margin: -1.9em 0.5em 0 0;
+  color: #717171;
+	cursor: pointer;
+	position: relative;
+}
+
+.password-eye:hover {
+	color: #4e4e4e
+}
+
+.password-showed {
+	color: #3a3a3a !important;
+}
+
+.form-error {
+	display: block;
+	padding: 10px;
+	background: #ffb5b5;
+	border: 1px solid #f19696;
+	border-radius: 4px;
+	box-shadow: 0 1px 5px #c5c5c5;
+}

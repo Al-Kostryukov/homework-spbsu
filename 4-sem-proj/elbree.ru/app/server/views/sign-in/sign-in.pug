@@ -1,0 +1,39 @@
+extends ../layouts/layout.pug
+
+block meta-keywords-description
+
+block title
+	title Вход | elbree
+
+block append scripts
+	script(type="text/javascript", src="/public/js/sign-in/sign-in.js")
+
+block append stylesheets
+	link(rel='stylesheet', href='/public/css/sign-in/sign-in.css')
+
+block sidebar-under-logo
+	ul.sidebar-block
+		li
+			a.active(href="/sign-in") Вход
+		li
+			a(href="/sign-up") Регистрация
+
+block content-right
+	- var pageTitle = "Вход"
+	- var pageDescription = "Внутри уютнее :)"
+	include ../layouts/header-centered.pug
+	div.content
+		div.sign-in-form-container
+			form#form.pure-form.pure-u-1-3(@submit.prevent="onSubmit")
+				form-error(ref="formError")
+				fieldset.pure-group
+					input(ref='email' v-model='email' type='text' placeholder='Email')
+					input(ref='password' v-model='password' type='password' placeholder='Пароль')
+				div(ref="buttonsContainer")
+					button.pure-controls.pure-button.pure-button-primary(type='submit' ref="submitButton") Войти
+					a.restore-pass.pure-button(href='/sign-in/restore') Забыл пароль
+			div.below-signin-form
+				p.lightweight-p-devider
+					| А если еще не с нами, то
+				p
+					a.pure-button(href='/sign-up') Зарегистрируйся
