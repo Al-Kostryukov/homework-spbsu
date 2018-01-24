@@ -76,8 +76,8 @@
 
   ```node tests.js all```
 
-   - Approximate time ~4.5 minutes for all (99) tests on Node.js v7.9.4
-   - Approximate time ~3 minute for all (99) tests on Node.js v9.4.0
+   - Approximate time ~4.5 minutes for all (99 big + 60 small) tests on Node.js v7.9.4
+   - Approximate time ~3 minute for all (99 big + 60 small) tests on Node.js v9.4.0
 
 - To test all algorithms with SMALL tests:
 
