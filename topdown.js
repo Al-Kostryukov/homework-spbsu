@@ -10,7 +10,7 @@ class Graph {
 
   //@param graphAsString <string>
   parse(graphAsString) {
-    const graphStructure = [], //adjMatrix here
+    const graphStructure = [],
           lines = graphAsString.split(/\r?\n/),
           regexp = /(\d+).*label\s*=\s*"(.+?)"/;
     for (let line of lines) {
@@ -152,8 +152,6 @@ module.exports = class TopDownSolver {
         }
       }
     }
-
-
 
     let resultFinal = [];
     for (let res of result) {

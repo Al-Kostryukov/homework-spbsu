@@ -25,7 +25,9 @@ const types = {
       graphFilesPathsSmall = [
         'mutual-loop.dot',
         'linear.dot',
-
+        '8.dot',
+        'random.dot',
+        'coprime-cycle.dot'
       ],
       homskyGrammarFilesDir = path.join('tests', 'grammars', 'homsky'),
       rfaGrammarFilesDir = path.join('tests', 'grammars', 'rfa'),
@@ -40,13 +42,15 @@ const types = {
         'Q3-rfa.dot'
       ],
       homskyGrammarFilesPathsSmall = [
-
+        'a-star-b.txt',
+        'an-bn.txt'
       ],
       rfaGrammarFilesPathsSmall = [
         'a-star-b.dot',
         'an-bn.dot',
-        'cycle.dot',
-
+        'random.dot',
+        'plus.dot',
+        'coprime-cycle.dot'
       ],
       trueResultsBig = [
       //skos, gene, trav, univ, atom , biome, foaf, peop, fund , wine , pizza
@@ -55,8 +59,11 @@ const types = {
         [32 , 19  , 31  , 12  , 3    , 0    , 46  , 36  , 18   , 1215 , 9520 ]//Q3
       ],
       trueResultsSmall = [
-        [8], //a-star-b
-        [27], //an-bn
+        [12, 0, 1, 2, 6], //a-star-b
+        [2, 0, 0, 2, 12], //an-bn
+        [0, 0, 0, 0, 0], //random.dot
+        [0, 0, 0, 0, 0], //plus
+        [8, 3, 1, 2, 6] //coprime-cycle
       ];
 
 class Test {
@@ -140,13 +147,15 @@ class Test {
     let timeStart = timeStartPrev ? timeStartPrev : Date.now();
 
     if (small) {
-      Helper.smartLog(0, "Running SMALL tests...");
+      Helper.smartLog(0, "\nRunning SMALL tests...");
     } else {
-      Helper.smartLog(0, "Running BIG tests...");
+      Helper.smartLog(0, "\nRunning BIG tests...");
     }
 
+    let status;
+
     Helper.smartLog(0, Helper.timeSpentFormatted(timeStart, 10, "yellowBg"), "Running tests for matrix algorithm...");
-    let status = Test.start("m", small);
+    status = Test.start("m", small);
     if (!status) {
       return 0;
     }
@@ -164,7 +173,7 @@ class Test {
       return 0;
     }
 
-    Helper.smartLog(0, "\n" + Helper.timeSpentFormatted(timeStart, 10, "yellowBg"), "All" + (small ? "SMALL" : "BIG") + "tests passed!");
+    Helper.smartLog(0, "\n" + Helper.timeSpentFormatted(timeStart, 10, "yellowBg"), "All " + (small ? "SMALL" : "BIG") + " tests passed!");
 
     return timeStart;
   }
@@ -180,7 +189,10 @@ if (type == "small") {
   Helper.smartLog(0, "Running ALL tests: SMALL and BIG...");
   let prevTime = Test.startAll(true);
   if (prevTime > 0) {
-    Test.startAll(false, prevTime)
+    let res = Test.startAll(false, prevTime)
+    if (res) {
+      Helper.smartLog(0, "ALL tests passed...");
+    }
   }
 } else {
   Test.start(type);
