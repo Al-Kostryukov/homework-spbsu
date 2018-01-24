@@ -10,7 +10,7 @@ const types = {
 class Analyze {
   static start(t, grammarFilePath, graphFilePath, outputFilePath) {
     if (!types.hasOwnProperty(t)) {
-      Helper.smartLog(0, Helper.c("Error! No such type of algorithm! Specify it in such way: node test.js [type], where [type] is m, b or t", "redBg"));
+      Helper.smartLog(0, Helper.c("Error! No such type of algorithm! Specify it in such way: node analyze.js [type], where [type] is m, b or t", "redBg"));
       return;
     }
 
