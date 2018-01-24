@@ -9,7 +9,7 @@ const types = {
         "t": "topdown"
       },
       graphFilesDir = path.join('tests', 'graphs'),
-      graphFilesPaths = [
+      graphFilesPathsBig = [
         'skos.dot',
         'generations.dot',
         'travel.dot',
@@ -22,30 +22,62 @@ const types = {
         'wine.dot',
         'pizza.dot'
       ],
+      graphFilesPathsSmall = [
+        'mutual-loop.dot',
+        'linear.dot',
+
+      ],
       homskyGrammarFilesDir = path.join('tests', 'grammars', 'homsky'),
       rfaGrammarFilesDir = path.join('tests', 'grammars', 'rfa'),
-      homskyGrammarFilesPaths = [
+      homskyGrammarFilesPathsBig = [
         'Q1-homsky.txt',
         'Q2-homsky.txt',
         'Q3-homsky.txt'
       ],
-      rfaGrammarFilesPaths = [
-        'Q1-rfa.txt',
-        'Q2-rfa.txt',
-        'Q3-rfa.txt'
+      rfaGrammarFilesPathsBig = [
+        'Q1-rfa.dot',
+        'Q2-rfa.dot',
+        'Q3-rfa.dot'
       ],
-      trueResults = [
+      homskyGrammarFilesPathsSmall = [
+
+      ],
+      rfaGrammarFilesPathsSmall = [
+        'a-star-b.dot',
+        'an-bn.dot',
+        'cycle.dot',
+
+      ],
+      trueResultsBig = [
       //skos, gene, trav, univ, atom , biome, foaf, peop, fund , wine , pizza
         [810, 2164, 2499, 2540, 15454, 15156, 4118, 9472, 17634, 66572, 56195],//Q1
         [1  , 0   , 63  , 81  , 122  , 2871 , 10  , 37  , 1158 , 133  , 1262 ],//Q2
         [32 , 19  , 31  , 12  , 3    , 0    , 46  , 36  , 18   , 1215 , 9520 ]//Q3
+      ],
+      trueResultsSmall = [
+        [8], //a-star-b
+        [27], //an-bn
       ];
 
 class Test {
-  static startBig(t) {
+  static start(t, small) {
     if (!types.hasOwnProperty(t)) {
       Helper.smartLog(0, Helper.c("Error! No such type of algorithm! Specify it in such way: node test.js [type], where [type] is m, b or t", "redBg"));
       return;
+    }
+
+    let homskyGrammarFilesPaths, rfaGrammarFilesPaths, graphFilesPaths, trueResults;
+
+    if (small) {
+      homskyGrammarFilesPaths = homskyGrammarFilesPathsSmall;
+      rfaGrammarFilesPaths = rfaGrammarFilesPathsSmall;
+      graphFilesPaths = graphFilesPathsSmall;
+      trueResults = trueResultsSmall;
+    } else {
+      homskyGrammarFilesPaths = homskyGrammarFilesPathsBig;
+      rfaGrammarFilesPaths = rfaGrammarFilesPathsBig;
+      graphFilesPaths = graphFilesPathsBig;
+      trueResults = trueResultsBig;
     }
 
     let type = types[t],
@@ -54,7 +86,7 @@ class Test {
 
     let testsCount = grammarFilesPaths.length * graphFilesPaths.length,
         testI = 0,
-        timeStart = Date.now()
+        timeStart = Date.now();
     for (let i = 0; i < grammarFilesPaths.length; i++) {
       for (let j = 0; j < graphFilesPaths.length; j++) {
         testI++;
@@ -83,28 +115,58 @@ class Test {
                           Helper.c("passed!", "green"),
                           Helper.c("(result) " + count, "greenBg"),
                           "==",
-                          Helper.c(trueResults[i][j] + " (true result)", "cyanBg"));
+                          Helper.c(trueResults[i][j] + " (expected result)", "cyanBg"));
           Helper.wait();
         } else {
           Helper.smartLog(0, Helper.timeSpentFormatted(timeStart, 10, "red"), testI, "/", testsCount,
                           Helper.c("failed!", "red"),
                           Helper.c("(result) " + count, "redBg"),
                           "!=",
-                          Helper.c(trueResults[i][j] + " (true result)", "cyanBg"));
+                          Helper.c(trueResults[i][j] + " (expected result)", "cyanBg"));
           Helper.smartLog(0, Helper.timeSpentFormatted(timeStart, 10, "red"),
                           Helper.c("Failed on test #" + testI + ":", "redBg"),
                           Helper.c("Grammar: " + grammarFilesPaths[i], "yellow"),
                           Helper.c("Graph: " + graphFilesPaths[j], "cyan"));
-          return;
+          return false;
         }
       }
     }
 
-    Helper.smartLog(0, Helper.timeSpentFormatted(timeStart, 10, "green"), Helper.c("All tests passed!", "greenBg"));
+    Helper.smartLog(0, Helper.timeSpentFormatted(timeStart, 10, "green"), Helper.c("All tests for " + type + " algorithm passed!", "greenBg"));
+    return true;
   }
 
-  static startSmall() {
+  static startAll(small, timeStartPrev) {
+    let timeStart = timeStartPrev ? timeStartPrev : Date.now();
 
+    if (small) {
+      Helper.smartLog(0, "Running SMALL tests...");
+    } else {
+      Helper.smartLog(0, "Running BIG tests...");
+    }
+
+    Helper.smartLog(0, Helper.timeSpentFormatted(timeStart, 10, "yellowBg"), "Running tests for matrix algorithm...");
+    let status = Test.start("m", small);
+    if (!status) {
+      return 0;
+    }
+
+
+    Helper.smartLog(0, "\n" + Helper.timeSpentFormatted(timeStart, 10, "yellowBg"), "Running tests for bottomup algorithm...");
+    status = Test.start("b", small);
+    if (!status) {
+      return 0;
+    }
+
+    Helper.smartLog(0, "\n" + Helper.timeSpentFormatted(timeStart, 10, "yellowBg"), "Running tests for topdown algorithm...");
+    status = Test.start("t", small);
+    if (!status) {
+      return 0;
+    }
+
+    Helper.smartLog(0, "\n" + Helper.timeSpentFormatted(timeStart, 10, "yellowBg"), "All" + (small ? "SMALL" : "BIG") + "tests passed!");
+
+    return timeStart;
   }
 }
 
@@ -112,4 +174,14 @@ class Test {
 let args = process.argv.slice(2),
     type = args[0];
 
-type == "small" ? Test.startSmall() : Test.startBig(type);
+if (type == "small") {
+  Test.startAll(true)
+} else if (type == "all") {
+  Helper.smartLog(0, "Running ALL tests: SMALL and BIG...");
+  let prevTime = Test.startAll(true);
+  if (prevTime > 0) {
+    Test.startAll(false, prevTime)
+  }
+} else {
+  Test.start(type);
+}

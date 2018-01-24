@@ -101,4 +101,24 @@ module.exports = class Helper {
 
     return false;
   }
+
+  static isPairInArray(arr, pair) {
+    for (let p of arr) {
+      if (p[0] == pair[0] && p[1] == pair[1]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  static indexOfArray3(arr, sel) {
+    for (let el of arr) {
+      if (el[0] == sel[0] && el[1] == sel[1] && el[2] == sel[2]) {
+        return 0
+      }
+    }
+
+    return -1;
+  }
 }
