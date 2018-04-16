@@ -2,7 +2,7 @@ const eol = require("os").EOL;
 const Helper = require('./helper.js');
 const IO = require('./io.js');
 const MatrixSolver = require('./matrix.js');
-const BottomUpSolver = require('./bottomup.js');
+const BottomUpSolver = require('./bottomup-improved.js');
 const TopDownSolver = require('./topdown.js');
 
 module.exports = class Connector {
