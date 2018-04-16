@@ -27,20 +27,20 @@ class Graph {
   }
 
   addEdge(vertex1, vertex2, label) {
-    if (this.graphStructure[vertex1] == undefined) {
-      this.graphStructure[vertex1] = [];
+    if (this.graphStructure[vertex1] == null) {
+      this.graphStructure[vertex1] = new Map();
     }
 
 
     let pushed = false;
 
 
-    let outForVertex1Labels = Helper.findArrayByFirstElem(this.graphStructure[vertex1], vertex2);
+    let outForVertex1Labels = this.graphStructure[vertex1].get(vertex2);
     if (outForVertex1Labels == null) {
-      this.graphStructure[vertex1].push([vertex2, [label]]);
+      this.graphStructure[vertex1].set(vertex2, new Set([label]));
       pushed = true;
-    } else if (outForVertex1Labels[1].indexOf(label) < 0) {
-      outForVertex1Labels[1].push(label);
+    } else if (!outForVertex1Labels.has(label)) {
+      outForVertex1Labels.add(label);
       pushed = true;
     }
 
@@ -67,7 +67,7 @@ module.exports = class BottomUpSolver {
       smthChanged = false;
 
       for (let graphVertex = 0; graphVertex < graphStructure.length; graphVertex++) {
-        if (graphStructure[graphVertex] !== undefined) {
+        if (graphStructure[graphVertex] != null) {
           for (let nonTerminal in rfa.startStates) {
             if (rfa.startStates.hasOwnProperty(nonTerminal)) {
               for (let rfaVertex of rfa.startStates[nonTerminal]) {
@@ -83,7 +83,7 @@ module.exports = class BottomUpSolver {
 
     const result = [];
     for (let v1 = 0; v1 < graphStructure.length; v1++) {
-      if (graphStructure[v1] !== undefined) {
+      if (graphStructure[v1] != null) {
         for (let o of graphStructure[v1]) {
           let v2 = o[0];
           for (let label of o[1]) {
@@ -99,9 +99,10 @@ module.exports = class BottomUpSolver {
   }
 
   static traverse(rfa, graph, startPair, nonTerminal) {
-    let smthChanged = false,
-        graphStructure = graph.graphStructure,
-        workingPairs = [startPair];
+    let smthChanged = false;
+    const graphStructure = graph.graphStructure,
+        workingPairs = [startPair],
+        milledPairs = [startPair];
 
     while (workingPairs.length) {
       let [rfaVertex, graphVertex] = workingPairs.pop();
@@ -111,14 +112,15 @@ module.exports = class BottomUpSolver {
       }
 
 
-      if (rfa.graph[rfaVertex] !== undefined && graphStructure[graphVertex] !== undefined) {
+      if (rfa.graph[rfaVertex] != null && graphStructure[graphVertex] != null) {
         for (let outRfaVertexAndLabels of rfa.graph[rfaVertex]) {
           for (let outGraphVertexAndLabels of graphStructure[graphVertex]) {
             //intersect
-            let i = Helper.intersect(outRfaVertexAndLabels[1], outGraphVertexAndLabels[1]);
+            let i = Helper.hasIntersectionArrayAndSet2(outRfaVertexAndLabels[1], outGraphVertexAndLabels[1]);
             let potentialToAdd = [outRfaVertexAndLabels[0], outGraphVertexAndLabels[0]];
-            if (i.length > 0 && !Helper.inArray2(workingPairs, potentialToAdd)) {
+            if (i && !Helper.inArray2(milledPairs, potentialToAdd)) {
               workingPairs.push(potentialToAdd);
+              milledPairs.push(potentialToAdd);
             }
           }
         }

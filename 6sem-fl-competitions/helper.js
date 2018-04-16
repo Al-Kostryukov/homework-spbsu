@@ -92,6 +92,26 @@ module.exports = class Helper {
     return result;
   }
 
+  static hasIntersectionArrayAndSet(arr, set) {
+    for (let el of arr) {
+      if (set.has(el)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+    static hasIntersectionArrayAndSet2(arr, set) {
+        for (let i = 0; i < arr.length; i++) {
+            if (set.has(arr[i])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
   static inArray2(arr1, arr2) {
     for (let el of arr1) {
       if (el[0] == arr2[0] && el[1] == arr2[1]) {
