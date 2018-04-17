@@ -56,10 +56,10 @@ class RFAGrammar {
 
     addEdge(vertex1, vertex2, label, rfa) {
         if (rfa.outLabels[vertex1] == null) {
-            rfa.outLabels[vertex1] = new Set([label]);
+            rfa.outLabels[vertex1] = 0 | (1 << Helper.hash(label));
             rfa.graph[vertex1] = new Map();
         } else {
-            rfa.outLabels[vertex1].add(label);
+            rfa.outLabels[vertex1] |= (1 << Helper.hash(label));
         }
 
         let outForVertex1Labels = rfa.graph[vertex1].get(vertex2);
@@ -86,6 +86,16 @@ class Helper {
         }
 
         return false
+    }
+
+    //hashing
+    static hash(str) {
+        let sum = str.charCodeAt(0);
+        // for (let i = 0; i < str.length; i++) {
+        //     sum += str.charCodeAt(i);
+        // }
+        //console.log(str, sum);
+        return sum % 11;
     }
 }
 
@@ -117,10 +127,10 @@ class Graph {
 
   addEdge(vertex1, vertex2, label) {
       if (this.outLabels[vertex1] == null) {
-          this.outLabels[vertex1] = new Set([label]);
+          this.outLabels[vertex1] = 0 | (1 << Helper.hash(label));
           this.graphStructure[vertex1] = new Map();
       } else {
-          this.outLabels[vertex1].add(label);
+          this.outLabels[vertex1] |= (1 << Helper.hash(label));
       }
 
     //let pushed = false;
@@ -149,6 +159,7 @@ module.exports = class BottomUpSolver {
   }
 
   static solve(rfaGrammar, graph) {
+      let time1 = Date.now();
     const graphStructure = graph.graphStructure,
           rfa = rfaGrammar.rfa;
 
@@ -181,7 +192,7 @@ module.exports = class BottomUpSolver {
         }
       }
     }
-
+    console.log("time: ", Date.now() - time1);
     return result
   }
 
@@ -202,12 +213,12 @@ module.exports = class BottomUpSolver {
 
 
       if (rfa.graph[rfaVertex] != null && graphStructure[graphVertex] != null &&
-          Helper.hasIntersectionSetAndSet(rfa.outLabels[rfaVertex], graph.outLabels[graphVertex])) {
+          rfa.outLabels[rfaVertex] & graph.outLabels[graphVertex]) {
         for (let outRfaVertexAndLabels of rfa.graph[rfaVertex]) {
           for (let outGraphVertexAndLabels of graphStructure[graphVertex]) {
             //intersect
-            let i = Helper.hasIntersectionSetAndSet(outRfaVertexAndLabels[1], outGraphVertexAndLabels[1]);
-            if (i) {
+
+            if (Helper.hasIntersectionSetAndSet(outRfaVertexAndLabels[1], outGraphVertexAndLabels[1])) {
                 let potentialToAdd = [outRfaVertexAndLabels[0], outGraphVertexAndLabels[0]];
                 let key = potentialToAdd[0] * 1e12 + potentialToAdd[1];
                 if (!milledPairs.has(key)) {
