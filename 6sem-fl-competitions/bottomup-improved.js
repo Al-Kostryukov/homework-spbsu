@@ -8,7 +8,6 @@ class RFAGrammar {
     parse(rfaGrammarAsString) {
         let rfa = {
                 startStates: new Map(),
-                nonTermToFinalStates: new Map(),
                 finalStatesToNonTerm: new Map(),
                 graph: [],
                 outLabels: []
@@ -34,23 +33,18 @@ class RFAGrammar {
                         label = matched[2];
 
                     if (regexpFinalState.test(line)) {
-                        if (rfa.nonTermToFinalStates.has(label)) {
-                            rfa.nonTermToFinalStates.get(label).add(vertex);
-                        } else {
-                            rfa.nonTermToFinalStates.set(label, new Set([vertex]));
-                        }
-
                         if (rfa.finalStatesToNonTerm.has(vertex)) {
-                            rfa.finalStatesToNonTerm.get(vertex).push(label);
+                            rfa.finalStatesToNonTerm.get(vertex).add(label);
                         } else {
-                            rfa.finalStatesToNonTerm[vertex] = [label];
+                            rfa.finalStatesToNonTerm.set(vertex, new Set([label]));
                         }
                     }
+
                     if (regexpStartState.test(line)) {
-                        if (rfa.startStates.hasOwnProperty(label)) {
-                            rfa.startStates[label].push(vertex);
+                        if (rfa.startStates.has(label)) {
+                            rfa.startStates.get(label).add(vertex);
                         } else {
-                            rfa.startStates[label] = [vertex];
+                            rfa.startStates.set(label, new Set([vertex]));
                         }
                     }
                 }
@@ -61,25 +55,18 @@ class RFAGrammar {
     }
 
     addEdge(vertex1, vertex2, label, rfa) {
-        if (!rfa) {
-            rfa = this.rfa;
-        }
-
         if (rfa.outLabels[vertex1] == null) {
             rfa.outLabels[vertex1] = new Set([label]);
+            rfa.graph[vertex1] = new Map();
         } else {
             rfa.outLabels[vertex1].add(label);
         }
 
-        if (rfa.graph[vertex1] === undefined) {
-            rfa.graph[vertex1] = [[vertex2, [label]]]
+        let outForVertex1Labels = rfa.graph[vertex1].get(vertex2);
+        if (outForVertex1Labels == null) {
+            rfa.graph[vertex1].set(vertex2, new Set([label]));
         } else {
-            let outForVertex1Labels = Helper.findArrayByFirstElem(rfa.graph[vertex1], vertex2);
-            if (outForVertex1Labels == null) {
-                rfa.graph[vertex1].push([vertex2, [label]])
-            } else if (outForVertex1Labels[1].indexOf(label) < 0){
-                outForVertex1Labels[1].push(label);
-            }
+            outForVertex1Labels.add(label);
         }
     }
 
@@ -99,24 +86,6 @@ class Helper {
         }
 
         return false
-    }
-
-    static hasIntersectionArrayAndSet2(arr, set) {
-        for (let i = 0; i < arr.length; i++) {
-            if (set.has(arr[i])) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    static findArrayByFirstElem(arr, el) {
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i][0] == el) return arr[i];
-        }
-
-        return null;
     }
 }
 
@@ -181,8 +150,7 @@ module.exports = class BottomUpSolver {
 
   static solve(rfaGrammar, graph) {
     const graphStructure = graph.graphStructure,
-          rfa = rfaGrammar.rfa,
-          timeStart = Date.now();
+          rfa = rfaGrammar.rfa;
 
     let smthChanged = true;
     while (smthChanged) {
@@ -190,11 +158,9 @@ module.exports = class BottomUpSolver {
 
       for (let graphVertex = 0; graphVertex < graphStructure.length; graphVertex++) {
         if (graphStructure[graphVertex] != null) {
-          for (let nonTerminal in rfa.startStates) {
-            if (rfa.startStates.hasOwnProperty(nonTerminal)) {
-              for (let rfaVertex of rfa.startStates[nonTerminal]) {
-                smthChanged |= this.traverse(rfa, graph, [rfaVertex, graphVertex], nonTerminal);
-              }
+          for (let [nonTerminal, rfaVertexes] of rfa.startStates) {
+            for (let rfaVertex of rfaVertexes) {
+              smthChanged |= this.traverse(rfa, graph, [rfaVertex, graphVertex], nonTerminal);
             }
           }
         }
@@ -227,10 +193,11 @@ module.exports = class BottomUpSolver {
         milledPairs = new Set([startPair[0] * 1e12 + startPair[1]]);
 
     while (workingPairs.length) {
-      let [rfaVertex, graphVertex] = workingPairs.pop();
+      let [rfaVertex, graphVertex] = workingPairs.pop(),
+          finalNonTerms = rfa.finalStatesToNonTerm.get(rfaVertex);
 
-      if (rfa.finalStatesToNonTerm.hasOwnProperty(rfaVertex) &&
-          rfa.finalStatesToNonTerm[rfaVertex].indexOf(nonTerminal) > -1) {
+
+      if (finalNonTerms != null && finalNonTerms.has(nonTerminal)) {
           smthChanged |= graph.addEdge(startPair[1], graphVertex, nonTerminal);
       }
 
@@ -240,7 +207,7 @@ module.exports = class BottomUpSolver {
         for (let outRfaVertexAndLabels of rfa.graph[rfaVertex]) {
           for (let outGraphVertexAndLabels of graphStructure[graphVertex]) {
             //intersect
-            let i = Helper.hasIntersectionArrayAndSet2(outRfaVertexAndLabels[1], outGraphVertexAndLabels[1]);
+            let i = Helper.hasIntersectionSetAndSet(outRfaVertexAndLabels[1], outGraphVertexAndLabels[1]);
             if (i) {
                 let potentialToAdd = [outRfaVertexAndLabels[0], outGraphVertexAndLabels[0]];
                 let key = potentialToAdd[0] * 1e12 + potentialToAdd[1];
