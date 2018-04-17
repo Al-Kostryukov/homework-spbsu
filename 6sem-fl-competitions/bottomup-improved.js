@@ -173,10 +173,9 @@ module.exports = class BottomUpSolver {
     for (let v1 = 0; v1 < graphStructure.length; v1++) {
       if (graphStructure[v1] != null) {
         for (let o of graphStructure[v1]) {
-          let v2 = o[0];
-          for (let label of o[1]) {
+           for (let label of o[1]) {
             if (RFAGrammar.isNonTerminal(label)) {
-              result.push(v1 + "," + label + "," + v2);
+              result.push(v1 + "," + label + "," + o[0]);
             }
           }
         }
