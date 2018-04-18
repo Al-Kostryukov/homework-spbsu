@@ -91,11 +91,18 @@ class Helper {
     //hashing
     static hash(str) {
         let sum = str.charCodeAt(0);
-        // for (let i = 0; i < str.length; i++) {
-        //     sum += str.charCodeAt(i);
-        // }
-        //console.log(str, sum);
-        return sum % 11;
+        for (let i = 0; i < str.length; i++) {
+            sum += str.charCodeAt(i);
+        }
+        return sum % 19;
+    }
+
+    static buildMask(set) {
+        let mask = 0;
+        for (let el of set) {
+            mask |= (1 << Helper.hash(el));
+        }
+        return mask;
     }
 }
 
@@ -199,34 +206,35 @@ module.exports = class BottomUpSolver {
   static traverse(rfa, graph, startPair, nonTerminal) {
     let smthChanged = false;
     const graphStructure = graph.graphStructure,
-        workingPairs = [startPair],
-        milledPairs = new Set([startPair[0] * 1e12 + startPair[1]]);
+        workingPairs = [startPair];
+
+    const milledPairs = new Set([startPair[0] * 1e12 + startPair[1]]);
+
 
     while (workingPairs.length) {
       let [rfaVertex, graphVertex] = workingPairs.pop(),
           finalNonTerms = rfa.finalStatesToNonTerm.get(rfaVertex);
-
 
       if (finalNonTerms != null && finalNonTerms.has(nonTerminal)) {
           smthChanged |= graph.addEdge(startPair[1], graphVertex, nonTerminal);
       }
 
 
-      if (rfa.graph[rfaVertex] != null && graphStructure[graphVertex] != null &&
-          rfa.outLabels[rfaVertex] & graph.outLabels[graphVertex]) {
+      if (rfa.outLabels[rfaVertex] & graph.outLabels[graphVertex]) {
         for (let outRfaVertexAndLabels of rfa.graph[rfaVertex]) {
-          for (let outGraphVertexAndLabels of graphStructure[graphVertex]) {
-            //intersect
+            if (graph.outLabels[graphVertex] & Helper.buildMask(outRfaVertexAndLabels[1])) {
+                for (let outGraphVertexAndLabels of graphStructure[graphVertex]) {
+                    //intersect
 
-            if (Helper.hasIntersectionSetAndSet(outRfaVertexAndLabels[1], outGraphVertexAndLabels[1])) {
-                let potentialToAdd = [outRfaVertexAndLabels[0], outGraphVertexAndLabels[0]];
-                let key = potentialToAdd[0] * 1e12 + potentialToAdd[1];
-                if (!milledPairs.has(key)) {
-                    workingPairs.push(potentialToAdd);
-                    milledPairs.add(key);
+                    if (Helper.hasIntersectionSetAndSet(outRfaVertexAndLabels[1], outGraphVertexAndLabels[1])) {
+                        let key = outRfaVertexAndLabels[0] * 1e12 + outGraphVertexAndLabels[0];
+                        if (!milledPairs.has(key)) {
+                            workingPairs.push([outRfaVertexAndLabels[0], outGraphVertexAndLabels[0]]);
+                            milledPairs.add(key);
+                        }
+                    }
                 }
             }
-          }
         }
       }
 
