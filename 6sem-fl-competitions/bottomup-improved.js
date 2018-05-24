@@ -170,7 +170,6 @@ module.exports = class BottomUpSolver {
   }
 
   static solve(rfaGrammar, graph) {
-      let time1 = Date.now();
     const graphStructure = graph.graphStructure,
           rfa = rfaGrammar.rfa;
 
@@ -203,7 +202,6 @@ module.exports = class BottomUpSolver {
         }
       }
     }
-    console.log("time: ", Date.now() - time1);
     return result
   }
 

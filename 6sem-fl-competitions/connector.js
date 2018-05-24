@@ -27,7 +27,9 @@ module.exports = class Connector {
       if (type === "matrix") {
         result = MatrixSolver.start(grammarAsString, graphAsString);
       } else if (type === "bottomup") {
+        const timeStart = Date.now();
         result = BottomUpSolver.start(grammarAsString, graphAsString);
+        console.log("time spent: ", Date.now() - timeStart, "ms");
       } else if (type === "topdown") {
         result = TopDownSolver.start(grammarAsString, graphAsString);
       } else {
