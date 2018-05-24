@@ -1,3 +1,7 @@
+const MAX_VERTEXES = 1000000000000;
+
+
+
 class RFAGrammar {
     //@param grammarAsString <string>
     constructor(rfaGrammarAsString) {
@@ -208,7 +212,7 @@ module.exports = class BottomUpSolver {
     const graphStructure = graph.graphStructure,
         workingPairs = [startPair];
 
-    const milledPairs = new Set([startPair[0] * 1e12 + startPair[1]]);
+    const milledPairs = new Set([startPair[0] * MAX_VERTEXES + startPair[1]]);
 
 
     while (workingPairs.length) {
@@ -227,7 +231,7 @@ module.exports = class BottomUpSolver {
                     //intersect
 
                     if (Helper.hasIntersectionSetAndSet(outRfaVertexAndLabels[1], outGraphVertexAndLabels[1])) {
-                        let key = outRfaVertexAndLabels[0] * 1e12 + outGraphVertexAndLabels[0];
+                        let key = outRfaVertexAndLabels[0] * MAX_VERTEXES + outGraphVertexAndLabels[0];
                         if (!milledPairs.has(key)) {
                             workingPairs.push([outRfaVertexAndLabels[0], outGraphVertexAndLabels[0]]);
                             milledPairs.add(key);
