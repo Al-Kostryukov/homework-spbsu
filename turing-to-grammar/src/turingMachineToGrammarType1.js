@@ -2,7 +2,7 @@ const helpers = require('./helpers');
 const constants = require('./constants');
 
 try {
-  const { deltaFunctions, states } = helpers.readTuringMachine('tm1.txt');
+  const { deltaFunctions } = helpers.readTuringMachine('tm1.txt');
 
   const {
     LEFT_MARKER,
@@ -10,7 +10,6 @@ try {
   } = constants;
 
   const tm = {
-    states,
     tapeSymbols: [
       '1_1_0', '0_B_0', '1', '0_B_1', '0_0_1', '0', '0_0_0', '0_0_B', '1_1_1', '1_B_B', '0_1_1',
       '1_0_1', '1_0__1', '1_1_B', '0_1_0', '1_0_0', '0_1_B', '1_B_0', '0_0__1', '1_0_B', '1_B_1', '0_B_B',
@@ -29,7 +28,7 @@ try {
     grammar.A1.push(`[${LEFT_MARKER} ${tm.startState} ${term} ${term} ${RIGHT_MARKER}]`);
   });
 
-  tm.deltaFunctions.filter(df => (tm.states.includes(df.fromState))).forEach((df) => {
+  tm.deltaFunctions.forEach((df) => {
     tm.inputSymbols.forEach((a) => {
       if (df.fromSymbol === LEFT_MARKER && df.shift === tm.rightShiftSymbol) {
         tm.tapeSymbols.forEach((X) => {

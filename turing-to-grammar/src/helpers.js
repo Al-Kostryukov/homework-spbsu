@@ -3,7 +3,6 @@ const fs = require('fs');
 const readTuringMachine = (file) => {
   const tm = fs.readFileSync(file, 'utf-8');
   const deltaFunctions = [];
-  const states = new Set();
   tm.split('\n').forEach((line) => {
     const parsedLine = /([^\s]+) ([^\s]+) -> ([^\s]+) ([^\s]+) ([^\s]+)/.exec(line);
 
@@ -15,13 +14,10 @@ const readTuringMachine = (file) => {
         toState: parsedLine[4],
         shift: parsedLine[5],
       });
-
-      states.add(parsedLine[2]);
     }
   });
 
   return {
-    states,
     deltaFunctions,
   };
 };
