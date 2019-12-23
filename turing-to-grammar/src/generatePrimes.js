@@ -9,7 +9,7 @@ module.exports = (grammar, n = +process.env.PRIMES_COUNT || 10, lengthLimit = 20
   const grammarLeft = Object.keys(grammar);
   const acceptRegexp = new RegExp(`^[1${EPS}]+$`);
 
-  while (generations.length > 0 && primes.size <= n) {
+  while (generations.length > 0 && primes.size < n) {
     const gen = generations.shift();
 
     grammarLeft.forEach((left) => {
