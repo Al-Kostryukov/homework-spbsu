@@ -11,7 +11,7 @@ try {
 
   const turingMachine = {
     tapeSymbols: [
-      '1', '$', '#', 'B',
+      '1', '$', '#', BLANK,
     ],
     inputSymbols: ['1'],
     deltaFunctions,
@@ -22,7 +22,7 @@ try {
   };
 
   const grammar = {};
-  grammar.A1 = [`[${EPS},B](${turingMachine.startState})A2`];
+  grammar.A1 = [`[${EPS},${BLANK}](${turingMachine.startState})A2`];
   grammar.A2 = [];
   turingMachine.inputSymbols.forEach((a) => {
     grammar.A2.push(`[${a},${a}]A2`);
